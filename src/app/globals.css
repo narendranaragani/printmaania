@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* E‑commerce light theme */
+  --color-primary: #222831;
+  --color-secondary: #ffd369;
+  --color-surface: #f8f8f8;
+  --color-card: #ffffff;
+  --color-accent: #ff6b35;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #555555;
+  --color-success: #4caf50;
+  --radius-card: 12px;
+  --shadow-card: 0 10px 35px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 18px 55px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+  @apply font-sans antialiased;
+}
+
+.section-padding {
+  @apply py-16 lg:py-24;
+}
+
+.glass-panel {
+  border-radius: var(--radius-card);
+  background-color: var(--color-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid #e5e7eb;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
