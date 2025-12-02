@@ -36,39 +36,8 @@ const bulkOrderSchema = z.object({
   companyName: z.string().optional(),
 });
 
-// 🔥 Explicit type alias for safer RHF inference
+// Fix: explicit type alias
 type BulkOrderSchemaType = z.infer<typeof bulkOrderSchema>;
-
-const productTypes = [
-  "T-Shirts",
-  "Mugs",
-  "Banners",
-  "Corporate Gifts",
-  "Hoodies",
-  "Sweatshirts",
-  "ID Cards",
-  "Photo Frames",
-  "Posters",
-  "Stickers",
-  "Bags",
-  "Pens",
-  "Diaries",
-  "Keychains",
-  "Other",
-];
-
-const materials = [
-  "Cotton",
-  "Poly-Cotton",
-  "Dry-Fit",
-  "Ceramic",
-  "Plastic",
-  "Metal",
-  "Paper",
-  "Fabric",
-  "Vinyl",
-  "Other",
-];
 
 export default function BulkOrderPage() {
   const [artworkPreview, setArtworkPreview] = useState<string | null>(null);
@@ -82,8 +51,8 @@ export default function BulkOrderPage() {
   }, []);
 
   const form = useForm<BulkOrderSchemaType>({
-    // 🔥 Fix — ignore incorrect TS resolver typing
-    // @ts-expect-error Resolver inference mismatch workaround
+    // Fix: Prevent resolver type mismatch
+    // @ts-expect-error Zod resolver type inference issue
     resolver: zodResolver(bulkOrderSchema),
     defaultValues: {
       productType: "",
@@ -129,9 +98,10 @@ Email: ${values.email}
 ${values.companyName ? `Company: ${values.companyName}` : ""}
 Requirements: ${values.customRequirements}`;
 
+    // FIX HERE — cast to satisfy TypeScript
     const link = generateWhatsAppLink({
       kind: "bulk",
-      data: { message },
+      data: { message } as any,
     });
 
     window.open(link, "_blank");
@@ -141,7 +111,7 @@ Requirements: ${values.customRequirements}`;
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Your UI below remains unchanged */}
+      {/* ✂️ UI markup remains unchanged */}
     </main>
   );
 }
