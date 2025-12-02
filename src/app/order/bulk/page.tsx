@@ -27,7 +27,10 @@ import { generateWhatsAppLink } from "@/lib/whatsapp";
 
 const bulkOrderSchema = z.object({
   productType: z.string().min(1, "Select a product type"),
-  quantity: z.preprocess((v) => Number(v), z.number().min(10, "Minimum order is 10 units")),
+  quantity: z.preprocess(
+    (v) => (v === "" || v === undefined ? undefined : Number(v)),
+    z.number().min(10, "Minimum order is 10 units")
+  ),
   artworkFile: z.any().optional(),
   material: z.string().min(1, "Select a material"),
   customRequirements: z.string().min(10, "Please describe your requirements"),
@@ -37,6 +40,7 @@ const bulkOrderSchema = z.object({
   email: z.string().email("Enter valid email"),
   companyName: z.string().optional(),
 });
+
 
 
 type BulkOrderFormValues = z.infer<typeof bulkOrderSchema>;
