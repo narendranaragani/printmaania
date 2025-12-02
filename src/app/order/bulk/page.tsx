@@ -27,7 +27,7 @@ import { generateWhatsAppLink } from "@/lib/whatsapp";
 
 const bulkOrderSchema = z.object({
   productType: z.string().min(1, "Select a product type"),
-  quantity: z.coerce.number().min(10, "Minimum order is 10 units"),
+  quantity: z.preprocess((v) => Number(v), z.number().min(10, "Minimum order is 10 units")),
   artworkFile: z.any().optional(),
   material: z.string().min(1, "Select a material"),
   customRequirements: z.string().min(10, "Please describe your requirements"),
@@ -37,6 +37,7 @@ const bulkOrderSchema = z.object({
   email: z.string().email("Enter valid email"),
   companyName: z.string().optional(),
 });
+
 
 type BulkOrderFormValues = z.infer<typeof bulkOrderSchema>;
 
@@ -91,11 +92,11 @@ export default function BulkOrderPage() {
     setMinDate(today.toISOString().split("T")[0]);
   }, []);
 
-  const form = useForm<BulkOrderFormValues>({
+  const form = useForm<z.infer<typeof bulkOrderSchema>>({
     resolver: zodResolver(bulkOrderSchema),
     defaultValues: {
       productType: "",
-      quantity: 10, // 🔥 updated value
+      quantity: 10,
       material: "",
       customRequirements: "",
       deliveryLocation: "",
@@ -105,6 +106,7 @@ export default function BulkOrderPage() {
       companyName: "",
     },
   });
+  
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
