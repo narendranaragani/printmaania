@@ -98,6 +98,7 @@ export const ProductCardCompact = ({ product, showBadges = true }: ProductCardCo
       productTitle: product.title,
       quantity: 1,
       unitPrice,
+      designUploaded: false,
     });
     toast.success("Added to cart!");
   };

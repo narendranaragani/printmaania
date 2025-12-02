@@ -25,6 +25,7 @@ export const ProductCustomization = ({ product }: { product: Product }) => {
   const addToCart = () => {
     addItem({
       productId: product.id,
+      productSlug: product.slug,
       productTitle: product.title,
       quantity,
       color,

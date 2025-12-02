@@ -79,6 +79,7 @@ export const ProductCard = ({ product, showBadges = true }: ProductCardProps) =>
       productTitle: product.title,
       quantity: 1,
       unitPrice,
+      designUploaded: false,
     });
     toast.success("Added to cart!");
   };

@@ -1,4 +1,5 @@
 import type { Product } from "./products";
+import { getPriceRange } from "./pricing";
 
 export type FilterOptions = {
   category?: string[];
@@ -53,14 +54,9 @@ export const filterProducts = (products: Product[], filters: FilterOptions): Pro
 
     // Price filter
     if (product.pricing) {
-      const { min, max } = getProductPriceRange(
+      const { min, max } = getPriceRange(
         product.pricing.basePrice,
-        product.pricing.variants?.map((v) => ({
-          color: v.color,
-          size: v.size,
-          material: v.material,
-          price: v.price,
-        })),
+        product.pricing.variants,
         product.pricing.bulkPricing,
       );
       if (filters.minPrice && max < filters.minPrice) return false;
