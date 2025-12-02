@@ -46,14 +46,15 @@ export default function NormalOrderPage() {
 
   const handleAddToCart = () => {
     addItem({
-      id: mockProduct.id,
       title: mockProduct.title,
       price: basePrice,
       quantity,
       image: mockProduct.images[0]?.url || "",
-    });
+    } as any);
+  
     toast.success("Added to cart!");
   };
+  
 
   const handleBuyNow = () => {
     handleAddToCart();
